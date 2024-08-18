@@ -1,7 +1,9 @@
 #include <iostream>
 
-int main(){
+int main()
+{
     using namespace std;
-    cout<<"Hello World";
+    cout<<"Hello World"<<'\n';
+
     return 0;
 }
