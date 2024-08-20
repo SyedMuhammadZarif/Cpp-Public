@@ -43,11 +43,28 @@ int main(){
 
     int size = sizeof(questions)/sizeof(questions[0]);
     char guess;
-    int score;
-
-    for(int i =0; i<size, i++){
+    int score=0;
+// main for loop
+    for(int i =0; i<size; i++)
+    {
         cout<<questions[i]<<'\n';
+        for(int j=0; j<sizeof(option[0])/sizeof(option[0][0]); j++)
+        {
+            cout<<option[i][j]<<'\n';
+        }
+        cin>>guess;
+            guess = toupper(guess);
+            if(guess == anskey[i])
+            {
+                cout<<"Correct!"<<'\n';
+                score++;
+            }
+            else{
+                cout<<"Wrong!"<<'\n';
+                cout<<"The correct answer is: "<<anskey[i]<<'\n';
+            }
     }
+    cout<<score<<"/"<<size<<"!\n";
 
     return 0;
 }
