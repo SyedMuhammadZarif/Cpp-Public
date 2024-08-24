@@ -10,42 +10,60 @@ bool checkWinner(char *spaces, char player, char computer);
 
 using namespace std;
 char *scenario = nullptr;
+int scores[] = {0, 0};
 
 int main()
 {
     srand(time(0));
-    char spaces[9] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
     char player = 'X';
     char computer = 'O';
     bool running = true;
-    drawboard(spaces);
 
     while (running)
     {
-        playerMove(spaces, player);
+        char spaces[9] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+        bool gameRunning = true;
         drawboard(spaces);
-        if (checkWinner(spaces, player, computer))
+
+        while (gameRunning)
         {
-            running = false;
-            break;
-        }
-        else if (checkTie(scenario, spaces))
-        {
-            running = false;
-            break;
+            playerMove(spaces, player);
+            drawboard(spaces);
+            if (checkWinner(spaces, player, computer))
+            {
+                gameRunning = false;
+                break;
+            }
+            else if (checkTie(scenario, spaces))
+            {
+                gameRunning = false;
+                break;
+            }
+
+            computerMove(spaces, computer);
+            drawboard(spaces);
+            if (checkWinner(spaces, player, computer))
+            {
+                gameRunning = false;
+                break;
+            }
+            else if (checkTie(scenario, spaces))
+            {
+                gameRunning = false;
+                break;
+            }
         }
 
-        computerMove(spaces, computer);
-        drawboard(spaces);
-        if (checkWinner(spaces, player, computer))
+        // Display the scores
+        cout << "Scores: Player - " << scores[0] << " | Computer - " << scores[1] << endl;
+
+        // Ask if the player wants to continue or quit
+        char choice;
+        cout << "Do you want to play again? (y/n): ";
+        cin >> choice;
+        if (choice != 'y' && choice != 'Y')
         {
             running = false;
-            break;
-        }
-        else if (checkTie(scenario, spaces))
-        {
-            running = false;
-            break;
         }
     }
 
@@ -106,6 +124,7 @@ bool checkWinner(char *spaces, char player, char computer)
         {
             scenario = &spaces[i];
             cout << (spaces[i] == player ? "Player" : "Computer") << " wins!" << endl;
+            spaces[i] == player ? scores[0]++ : scores[1]++;
             return true;
         }
     }
@@ -117,6 +136,7 @@ bool checkWinner(char *spaces, char player, char computer)
         {
             scenario = &spaces[i];
             cout << (spaces[i] == player ? "Player" : "Computer") << " wins!" << endl;
+            spaces[i] == player ? scores[0]++ : scores[1]++;
             return true;
         }
     }
@@ -126,12 +146,14 @@ bool checkWinner(char *spaces, char player, char computer)
     {
         scenario = &spaces[0];
         cout << (spaces[0] == player ? "Player" : "Computer") << " wins!" << endl;
+        spaces[0] == player ? scores[0]++ : scores[1]++;
         return true;
     }
     if (spaces[2] == spaces[4] && spaces[4] == spaces[6] && spaces[2] != ' ')
     {
         scenario = &spaces[2];
         cout << (spaces[2] == player ? "Player" : "Computer") << " wins!" << endl;
+        spaces[2] == player ? scores[0]++ : scores[1]++;
         return true;
     }
 
