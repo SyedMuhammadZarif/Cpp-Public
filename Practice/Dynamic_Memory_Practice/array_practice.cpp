@@ -19,5 +19,6 @@ int main(){
     {
         cout<<pGrades[i]<<',';
     }
+    delete pGrades;
     return 0;
 }
